@@ -5,10 +5,8 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock README.md ./
 COPY src ./src
 
-RUN pip install --no-cache-dir poetry && \
-    poetry config virtualenvs.create false && \
-    poetry install --no-interaction --no-ansi
+RUN pip install --no-cache-dir poetry
 
-COPY . .
+RUN poetry config virtualenvs.create false
 
-CMD ["gunicorn", "src.config.wsgi:application", "--bind", "0.0.0.0:8000"]
+RUN poetry install -vvv
