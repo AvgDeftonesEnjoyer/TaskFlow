@@ -1,25 +1,20 @@
-[project]
+[tool.poetry]
 name = "taskflow"
 version = "0.1.0"
-description = ""
-authors = [
-    {name = "Shapka Oleksii",email = "shapkaoleksiiu@gmail.com"}
-]
+description = "Task manager with Django and DRF"
+authors = ["Shapka Oleksii <shapkaoleksiiu@gmail.com>"]
 readme = "README.md"
-requires-python = ">=3.11"
-dependencies = [
-    "django (>=5.2.3,<6.0.0)",
-    "djangorestframework (>=3.16.0,<4.0.0)",
-    "psycopg2-binary (>=2.9.10,<3.0.0)",
-    "python-decouple (>=3.8,<4.0)",
-    "djangorestframework-simplejwt (>=5.5.0,<6.0.0)",
-    "drf-yasg (>=1.21.10,<2.0.0)"
-]
+packages = [{include = "taskflowapp", from = "src"}]
+# тут без package-mode
 
-[tool.poetry]
-packages = [{include = "taskflow", from = "src"}]
-package-mode = false
-
+[tool.poetry.dependencies]
+python = "^3.11"
+django = ">=5.2.3,<6.0.0"
+djangorestframework = ">=3.16.0,<4.0.0"
+psycopg2-binary = ">=2.9.10,<3.0.0"
+python-decouple = ">=3.8,<4.0"
+djangorestframework-simplejwt = ">=5.5.0,<6.0.0"
+drf-yasg = ">=1.21.10,<2.0.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
