@@ -4,7 +4,6 @@ version = "0.1.0"
 description = "Task manager with Django and DRF"
 authors = ["Shapka Oleksii <shapkaoleksiiu@gmail.com>"]
 readme = "README.md"
-packages = [{include = "taskflowapp", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
