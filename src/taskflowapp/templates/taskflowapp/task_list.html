@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Task List</h1>
+
+  <!-- FILTERS -->
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-4">
+      <label for="status" class="form-label">Filter by Status</label>
+      <select name="status" id="status" class="form-select">
+        <option value="">All</option>
+        <option value="todo" {% if request.GET.status == 'todo' %}selected{% endif %}>To Do</option>
+        <option value="in_progress" {% if request.GET.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+        <option value="done" {% if request.GET.status == 'done' %}selected{% endif %}>Done</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="priority" class="form-label">Filter by Priority</label>
+      <select name="priority" id="priority" class="form-select">
+        <option value="">All</option>
+        <option value="1" {% if request.GET.priority == '1' %}selected{% endif %}>1</option>
+        <option value="2" {% if request.GET.priority == '2' %}selected{% endif %}>2</option>
+        <option value="3" {% if request.GET.priority == '3' %}selected{% endif %}>3</option>
+      </select>
+    </div>
+    <div class="col-md-4 align-self-end">
+      <button type="submit" class="btn btn-primary">Apply Filters</button>
+      <a href="{% url 'task_list_view' %}" class="btn btn-secondary">Reset</a>
+    </div>
+  </form>
+
+  <!-- TASK CARDS -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for task in tasks %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ task.title }}</h5>
+            <p class="card-text">{{ task.description|default:"No description" }}</p>
+            <p class="card-text">
+              <strong>Status:</strong>
+              {% if task.status == "todo" %}
+                <span class="badge bg-primary">To Do</span>
+              {% elif task.status == "in_progress" %}
+                <span class="badge bg-warning text-dark">In Progress</span>
+              {% elif task.status == "done" %}
+                <span class="badge bg-success">Done</span>
+              {% endif %}
+            </p>
+            <p class="card-text"><strong>Priority:</strong> {{ task.priority }}</p>
+            <p class="card-text"><strong>Due:</strong> {{ task.due_date|date:"Y-m-d H:i" }}</p>
+            <p class="card-text text-muted"><small>Created: {{ task.created_at|date:"Y-m-d H:i" }}</small></p>
+          </div>
+          <div class="card-footer d-flex justify-content-between">
+            <a href="{% url 'update_task' task.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+            <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No tasks found.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
