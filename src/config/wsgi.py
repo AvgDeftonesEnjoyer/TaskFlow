@@ -13,7 +13,9 @@ from django.core.wsgi import get_wsgi_application
 import sys
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).resolve().parent.parent / "src"))
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+sys.path.append(str(BASE_DIR / "src"))
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'src.config.settings')
 
