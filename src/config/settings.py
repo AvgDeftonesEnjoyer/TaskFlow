@@ -1,12 +1,11 @@
 from pathlib import Path
-from decouple import config, Csv
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = list(config('ALLOWED_HOSTS', cast=Csv(), default=[]))
+SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 
 INSTALLED_APPS = [
     'drf_yasg',
