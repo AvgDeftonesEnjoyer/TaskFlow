@@ -12,4 +12,4 @@ COPY src ./src
 
 RUN python src/manage.py collectstatic --noinput
 
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "src.config.wsgi:application", "--bind", "0.0.0.0:8000"]
