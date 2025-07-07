@@ -10,8 +10,6 @@ RUN pip install --no-cache-dir poetry && \
 
 COPY src ./src
 
-WORKDIR /app/src
-
-RUN python manage.py collectstatic --noinput
+RUN python src/manage.py collectstatic --noinput
 
 CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
