@@ -8,7 +8,7 @@ COPY pyproject.toml poetry.lock README.md ./
 # встановлюємо poetry і залежності
 RUN pip install --no-cache-dir poetry && \
     poetry config virtualenvs.create false && \
-    poetry install --no-interaction --no-ansi \
+    poetry install --no-interaction --no-ansi && \
     python manage.py collectstatic --noinput
 
 # копіюємо весь код
@@ -16,4 +16,3 @@ COPY src ./src
 
 # запускаємо
 CMD ["gunicorn", "src.config.wsgi:application", "--bind", "0.0.0.0:8000"]
-
