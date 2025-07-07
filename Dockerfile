@@ -2,20 +2,16 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# копіюємо залежності
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml poetry.lock README.md ./
 
-# встановлюємо poetry і залежності
 RUN pip install --no-cache-dir poetry && \
     poetry config virtualenvs.create false && \
     poetry install --no-interaction --no-ansi
 
-# копіюємо весь код
-COPY . .
+COPY src ./src
 
-# створюємо папку статики і збираємо її
-RUN mkdir -p src/staticfiles && \
-    python src/manage.py collectstatic --noinput
+WORKDIR /app/src
 
-# запускаємо
-CMD ["gunicorn", "src.config.wsgi:application", "--bind", "0.0.0.0:8000"]
+RUN python manage.py collectstatic --noinput
+
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
